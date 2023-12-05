@@ -89,19 +89,19 @@ export class FoodMess {
 function main() {
   const fm = new FoodMess(input);
   const seeds = fm.data.seeds;
-  let closesLocation = -1
+  let closestLocation = -1
   for (let i = 0;i < seeds.length; i+=2){
     const [start, range] = [seeds[i], seeds[i+1]];
     const max = start + range;
     for (let j=start; j < max; j++){
       const location = fm.seedToLocation(j)
-      if(location < closesLocation || closesLocation === -1){
-        closesLocation = location;
+      if(location < closestLocation || closestLocation === -1){
+        closestLocation = location;
       }
     }
   }
 
-  console.log(closesLocation)
+  console.log(closestLocation)
 }
 
 main()
