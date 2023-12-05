@@ -1,4 +1,5 @@
 import input from './input';
+import {simpleInput} from './input';
 
 export class FoodMess {
 
@@ -32,7 +33,7 @@ export class FoodMess {
         return n.split(/\n/g).map(sectionLine => {
           return sectionLine.split(/ +/g).map(n => parseInt(n));
         })
-    })
+      })
     this.data = {
       seeds,
       seedToSoil,
@@ -47,16 +48,14 @@ export class FoodMess {
 
   lookUpNextPosition (number: number, maps: number[][]) {
     let nextNumber = number
-    let found = false;
-    maps.forEach(map => {
-      if (found) return;
+    for (const map of maps) {
       const [destinationStart, sourceStart, range] = map;
       if (number >= sourceStart && number <= sourceStart + range) {
         const index = number - sourceStart;
         nextNumber = destinationStart + index;
-        found = true;
+        break;
       }
-    })
+    }
     return nextNumber
   }
 
@@ -89,10 +88,20 @@ export class FoodMess {
 
 function main() {
   const fm = new FoodMess(input);
-  console.log(Math.min(...fm.data.seeds.map(s => {
-    return fm.seedToLocation(s);
-  })))
+  const seeds = fm.data.seeds;
+  let closesLocation = -1
+  for (let i = 0;i < seeds.length; i+=2){
+    const [start, range] = [seeds[i], seeds[i+1]];
+    const max = start + range;
+    for (let j=start; j < max; j++){
+      const location = fm.seedToLocation(j)
+      if(location < closesLocation || closesLocation === -1){
+        closesLocation = location;
+      }
+    }
+  }
 
+  console.log(closesLocation)
 }
 
 main()

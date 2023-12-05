@@ -35,11 +35,36 @@ humidity-to-location map:
 60 56 37
 56 93 4`;
 
+const seedToSoilTests = [
+  [79, 81],
+  [14, 14],
+  [55, 57],
+  [13, 13]
+];
+
+const seedToLocationTests = [
+  [79, 82],
+  [14, 43],
+  [55, 86],
+  [13, 35]
+]
+
 describe('Test map', () => {
   const fm = new FoodMess(input);
-  test(`Lookup position`, () => {
 
-    expect(fm.lookUpPosition(79, fm.data.seedToSoil))
-      .toEqual(81)
+  seedToSoilTests.forEach(s2s => {
+    const [seed, answer] = s2s;
+    test(`Seed ${seed} should result in ${answer}`, () => {
+      expect(fm.lookUpNextPosition(seed, fm.data.seedToSoil))
+        .toEqual(answer)
+    })
+  })
+
+  seedToLocationTests.forEach(s2l => {
+    const [seed, answer] = s2l;
+    test(`Seed ${seed} should result in location ${answer}`, () => {
+      expect(fm.seedToLocation(seed))
+        .toEqual(answer)
+    })
   });
 });
