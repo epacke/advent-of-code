@@ -1,9 +1,5 @@
 import input from './input';
 
-const t = `
-Time:      7  15   30
-Distance:  9  40  200`
-
 export class BoatRace {
   data: {time: number, distance: number}[] = [];
 
